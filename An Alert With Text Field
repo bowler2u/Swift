@@ -1,0 +1,25 @@
+let ALERT =  UIAlertController(title: "Add", message: "Write your todo" , preferredStyle: .alert)
+        
+        ALERT.addTextField{ (ourTextField) in
+            ourTextField.placeholder = "Enter text here"
+        }
+        
+        
+        let SaveAction = UIAlertAction(title: "Save", style: .default) { (action) in
+            if let valueExist = ALERT.textFields?.first {
+                let inputValue = valueExist.text
+                print(inputValue!)
+                /*******************************/
+               /* call the func that saveToCoreData here and make sure you
+               pass to it a parameter that holds the inputValue */
+                /******************************/
+                // self.tableView.reloadData()
+            }
+        }
+        
+        
+        let CanceleAction = UIAlertAction(title: "Cancele", style: .cancel, handler: nil)
+        
+        ALERT.addAction(SaveAction)
+        ALERT.addAction(CanceleAction)
+        self.present(ALERT, animated: true)
