@@ -1,0 +1,51 @@
+
+import UIKit
+import AVKit
+
+
+class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
+
+    
+    @IBOutlet weak var cameraView: UIView!
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+       
+        
+        //set up capture session
+        let captureSession = AVCaptureSession()
+        
+        
+        // 1- use AVCaptureDevice (camera) as data input type of (video)
+        guard let captureDevice = AVCaptureDevice.default(for: .video) else { return }
+        guard let input = try? AVCaptureDeviceInput(device: captureDevice) else { return }
+    
+        captureSession.addInput(input)
+        captureSession.startRunning()
+        
+        
+        
+        
+        // 2- link the camera to the subview we created
+        let cameraPreview = AVCaptureVideoPreviewLayer(session: captureSession)
+        cameraPreview.frame = CGRect(x: 0, y: 0, width: cameraView.frame.size.width, height: cameraView.frame.size.height)
+        //add as a sublayer
+        cameraView.layer.addSublayer(cameraPreview)
+        
+        
+        
+        
+        // 3- display the output of the camera in the subview
+        let cameraOutput = AVCaptureVideoDataOutput()
+        cameraOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "video2"))
+        captureSession.addOutput(cameraOutput)
+        
+       
+    }
+
+
+
+    
+} // end of viewController
